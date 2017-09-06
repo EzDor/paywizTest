@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Blogag.io :)
+    </title>
+</head>
+<body>
+<header>
+    <h1>Welcome to Blogag</h1>
+</header>
+<div>
+    Some post
+</div>
+<button class="reload-post-from-db" type="button">Reload</button>
+<button class="post-to-db" type="button">Post</button>
+</button>
+</body>
+</html>
+
+<script>
+
+
+    var makeRESTCall = function (e) {
+        if(!e){
+            return;
+        }
+        var call = '/';
+        switch (e.currentTarget.clssName){
+            case 'post-to-db':
+                call += 'getPost'
+            default:
+                call += 'reloadPosts'
+        }
+
+
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                callback(xmlHttp.responseText);
+        }
+
+        xmlHttp.open("GET", call, true); // true for asynchronous
+        xmlHttp.send(null);
+    };
+
+    if( document.body.attachEvent){
+        document.getElementsByClassName('reload-post-from-db')[0].attachEvent("onclick",makeRESTCall);
+        document.getElementsByClassName('post-to-db')[0].attachEvent("onclick",makeRESTCall);
+    }
+
+    else{
+        document.getElementsByClassName('reload-post-from-db')[0].addEventListener("click",makeRESTCall);
+        document.getElementsByClassName('post-to-db')[0].addEventListener("click",makeRESTCall);
+    }
+
+</script>
